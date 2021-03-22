@@ -71,7 +71,7 @@ const displayMovements = function (movements, sort = false) {
     const html = `<div class="movements__row">
     <div class="movements__type movements__type--${type}">${i + 1}${type}</div>
     <div class="movements__date">3 days ago</div>
-    <div class="movements__value">${mov}€</div>
+    <div class="movements__value">${mov.toFixed(2)}€</div>
   </div>`;
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
@@ -92,28 +92,28 @@ const createUserName = accs => {
 createUserName(accounts);
 const calDisplayBalance = function (acc) {
   acc.balance = acc.movements.reduce((acc, val) => acc + val, 0);
-  labelBalance.textContent = acc.balance + '€';
+  labelBalance.textContent = acc.balance.toFixed(2) + '€';
 };
 
 const calDisplaySummary = function (user) {
   const incomes = user.movements
-    .filter((mov, i) => {
+    .filter(mov => {
       return mov > 0;
     })
-    .reduce((acc, mov, i) => acc + mov, 0);
-  labelSumIn.textContent = `${incomes}€`;
+    .reduce((acc, mov) => acc + mov, 0);
+  labelSumIn.textContent = `${incomes.toFixed(2)}€`;
   const out = user.movements
-    .filter((mov, i) => {
+    .filter(mov => {
       return mov < 0;
     })
     .reduce((acc, mov, i) => acc + mov, 0);
-  labelSumOut.textContent = `${Math.abs(out)}€`;
+  labelSumOut.textContent = `${Math.abs(out).toFixed(2)}€`;
   const interest = user.movements
     .filter(mov => mov > 0)
     .map(deposit => (deposit * user.interestRate) / 100)
     .filter(interest => interest >= 1)
     .reduce((acc, interest) => acc + interest);
-  labelSumInterest.textContent = `${interest}€`;
+  labelSumInterest.textContent = `${interest.toFixed(2)}€`;
 };
 let currentAccount;
 
@@ -134,7 +134,7 @@ btnLogin.addEventListener('click', e => {
     user => inputLoginUsername.value === user.username
   );
 
-  if (currentAccount && Number(inputLoginPin.value) === currentAccount.pin) {
+  if (currentAccount && +inputLoginPin.value === currentAccount.pin) {
     inputTransferTo.value = inputTransferAmount.value = '';
     console.log(currentAccount);
     containerApp.style.opacity = 100;
@@ -152,7 +152,7 @@ btnTransfer.addEventListener('click', e => {
   let toAccount = accounts.find(
     user => inputTransferTo.value === user.username
   );
-  let amount = Number(inputTransferAmount.value);
+  let amount = +inputTransferAmount.value;
   console.log(amount, toAccount, currentAccount);
   if (
     amount > 0 &&
@@ -168,9 +168,10 @@ btnTransfer.addEventListener('click', e => {
   }
 });
 
+//loan
 btnLoan.addEventListener('click', e => {
   e.preventDefault();
-  const amount = Number(inputLoanAmount.value);
+  const amount = Math.floor(inputLoanAmount.value);
   if (amount > 0 && currentAccount.movements.some(mov => mov >= 0.1 * amount)) {
     currentAccount.movements.push(amount);
     updateUI(currentAccount);
@@ -182,7 +183,7 @@ btnClose.addEventListener('click', e => {
   e.preventDefault();
   if (
     currentAccount.username === inputCloseUsername.value &&
-    currentAccount.pin === Number(inputClosePin.value)
+    currentAccount.pin === +inputClosePin.value
   ) {
     inputCloseUsername.value = inputClosePin.value = '';
     const index = accounts.findIndex(
@@ -208,7 +209,7 @@ labelBalance.addEventListener('click', e => {
   e.preventDefault();
   const movementArr = Array.from(
     document.querySelectorAll('.movements__value'),
-    el => Number(el.textContent.replace('€', ''))
+    el => +el.textContent.replace('€', '')
   );
   console.log(movementArr);
 });
