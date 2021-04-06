@@ -1,0 +1,64 @@
+html {
+  font-size: 100%;
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+body {
+  padding: 0;
+  margin: 0;
+  font-weight: 300;
+  font-family: "Public Sans", sans-serif;
+}
+
+a,
+a:hover,
+a:visited {
+  text-decoration: none;
+}
+
+.flex {
+  display: flex;
+  &-jc-sb {
+    justify-content: space-between;
+  }
+
+  &-jc-c {
+    justify-content: center;
+  }
+
+  &-ai-c {
+    align-items: center;
+  }
+}
+
+//Button
+.button {
+  padding: 0.9375rem 2.1875rem;
+  background: linear-gradient(to right, $limeGreen, $brightCyan);
+  color: $white;
+  font-weight: 400;
+  border: 0;
+  outline: none;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+//Visibility
+.hide-for-mobile {
+  @include breakpoint-down(medium) {
+    display: none;
+  }
+  //hide for mobile devices
+}
+
+.hide-for-desktop {
+  @include breakpoint-up(large) {
+    display: none;
+  }
+  //hide for desktop-view devices
+}

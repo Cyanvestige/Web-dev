@@ -8,15 +8,19 @@
     <title>DiceGame</title>
   </head>
   <body>
+    <div class="angel-intro">
+      <p>this is a funcing</p>
+    </div>
     <main>
-      <div class="menu"></div>
       <div class="board">
         <section class="player angel">
           <div class="race up-race">Angel</div>
           <div class="point up-point">50</div>
           <div class="function">
-            <button class="roll">Roll</button>
-            <button class="ability">Ability</button>
+            <div class="buttons">
+              <button class="angel-roll">Roll</button>
+              <button class="angel-ap">Ability</button>
+            </div>
           </div>
         </section>
         <section class="distance"></section>
@@ -24,13 +28,16 @@
           <div class="race down-race">Demon</div>
           <div class="point down-point">50</div>
           <div class="function">
-            <button class="roll">Roll</button>
-            <button class="ability">Ability</button>
+            <div class="buttons">
+              <button class="demon-roll">Roll</button>
+              <button class="demon-ap">Ability</button>
+            </div>
           </div>
         </section>
       </div>
       <img src="dice-1.png" class="dice" />
       <button class="restart">Restart</button>
     </main>
+    <script src="script.js"></script>
   </body>
 </html>

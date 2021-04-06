@@ -137,7 +137,7 @@ nav.addEventListener('mouseover', handleHover.bind(0.5));
 
 nav.addEventListener('mouseout', handleHover.bind(1));
 
-//Sticky navigation
+//Sticky navigation //not a good way because updating scroll all the time
 // const initialCoords = section1.getBoundingClientRect();
 // window.addEventListener('scroll', function (e) {
 //   console.log(window.scrollY);
@@ -186,6 +186,7 @@ const revealSection = function (entries, observer) {
   entry.target.classList.remove('section--hidden');
   observer.unobserve(entry.target);
 };
+
 const sectionObserver = new IntersectionObserver(revealSection, {
   root: null,
   threshold: 0.15,
@@ -234,7 +235,7 @@ const nextSlide = function () {
   else currSlide++;
   gotoSlide(currSlide);
 };
-
+//not a good way because updating scroll all the time
 const prevSlide = function () {
   if (currSlide == 0) currSlide = 2;
   else currSlide--;
